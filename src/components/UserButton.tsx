@@ -4,6 +4,7 @@ import useAuth from "@/hooks/auth";
 import { members } from "@wix/members";
 import {
   Check,
+  ChevronDown,
   LogInIcon,
   LogOutIcon,
   Monitor,
@@ -27,6 +28,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { useTheme } from "next-themes";
+import { cn } from "@/lib/utils";
 
 interface UserButtonProps {
   loggedInMember: members.Member | null;
@@ -45,9 +47,13 @@ export default function UserButton({
  return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button size="icon" variant="ghost" className={className}>
-          <UserIcon />
-        </Button>
+        <button className={cn("flex items-center gap-2 hover:text-gray-200 transition-colors", className)}>
+          <UserIcon className="size-6" />
+          <div className="hidden md:flex items-center gap-1 text-[13px] font-semibold">
+            <span>Account</span>
+            <ChevronDown className="size-4" />
+          </div>
+        </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-44 max-w-64">
         {loggedInMember && (

@@ -71,11 +71,17 @@ export default function SearchField({ className }: SearchFieldProps) {
       onSubmit={handleSubmit}
       method="GET"
       action="/shop"
-      className={cn("grow", className)}
+      className={cn("grow w-full", className)}
     >
-      <div className="relative">
-        <Input name="q" placeholder="Search products, categories, and more..." className="pe-10" />
-        <SearchIcon className="absolute right-3 top-1/2 size-5 -translate-y-1/2 transform text-muted-foreground" />
+      <div className="relative w-full">
+        <Input 
+          name="q" 
+          placeholder="Search products..." 
+          className="pe-10 rounded-full bg-white text-black h-11 border-none focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-blue-400" 
+        />
+        <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 transform text-[#1350a2] hover:text-blue-800 transition-colors">
+          <SearchIcon className="size-5" />
+        </button>
       </div>
     </form>
   );

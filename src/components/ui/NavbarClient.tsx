@@ -11,6 +11,7 @@ import MobileMenu from "@/app/MobileMenu";
 import MobileBottomNav from "@/components/ui/MobileBottomNav";
 import UserButton from "@/components/UserButton";
 import ShoppingCartButton from "@/app/ShoppingCartButton";
+import { GiftIcon } from "lucide-react";
 
 export default function NavbarClient({
   initialCart,
@@ -27,41 +28,59 @@ export default function NavbarClient({
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-background shadow-sm">
-        <div className="mx-auto max-w-7xl p-3 md:p-5">
-          {/* Mobile Menu */}
-          <Suspense>
-            <div className="block md:hidden">
-              <MobileMenu
-                collections={collections}
-                loggedInMember={loggedInMember}
-              />
-            </div>
-          </Suspense>
+      <header className="sticky top-0 z-50 shadow-sm">
+        {/* Top Row - Blue Background */}
+        <div className="bg-[#1350a2] text-white">
+          <div className="mx-auto max-w-7xl px-3 py-3 md:px-5 flex items-center justify-between gap-4">
 
-          {/* Desktop navbar */}
-          <div className="hidden items-center gap-3 md:flex md:justify-between">
-            <div className="flex">
-              <Link href="/" className="flex items-center gap-4">
-                <Image src="/logonew.svg" alt="Logo" width={60} height={60} />
-                {/* <span className="text-xl font-bold">Yuricart</span> */}
+            {/* Mobile Menu & Logo */}
+            <div className="flex items-center gap-4">
+              <Suspense>
+                <div className="block md:hidden text-white [&>button]:text-white">
+                  <MobileMenu
+                    collections={collections}
+                    loggedInMember={loggedInMember}
+                  />
+                </div>
+              </Suspense>
+              <Link href="/" className="flex items-center gap-2">
+                <Image src="/logonew.svg" alt="Logo" width={30} height={30} className="w-[40px] md:w-[50px] h-auto object-contain" />
               </Link>
-              <MainNavigation
-                collections={collections}
-                className="hidden md:flex"
-              />
             </div>
 
-            <SearchField className="hidden max-w-96 md:inline" />
+            {/* Search Bar - Hidden on mobile, takes available space on desktop */}
+            <div className="hidden md:block flex-1 max-w-2xl px-4">
+              <SearchField />
+            </div>
 
-            <div className="flex items-center justify-center gap-5">
-              <UserButton
-                loggedInMember={loggedInMember}
-                className="hidden md:inline-flex"
-              />
-              <ShoppingCartButton initialData={cartData} />
+            {/* Right side items: Offers, Cart, Account */}
+            <div className="flex items-center gap-4 md:gap-6">
+              <Link href="/offers" className="hidden lg:flex items-center gap-2 hover:text-gray-200">
+                <GiftIcon className="size-6" />
+                <span className="text-sm font-medium">Offers</span>
+              </Link>
+
+              <div className="flex items-center gap-2 md:gap-5">
+                <ShoppingCartButton initialData={cartData} />
+                <UserButton
+                  loggedInMember={loggedInMember}
+                  className="inline-flex text-white hover:text-gray-200 hover:bg-white/10"
+                />
+              </div>
             </div>
           </div>
+        </div>
+
+        {/* Bottom Row - White Background (Desktop Only) */}
+        <div className="hidden md:block bg-white border-b">
+          <div className="mx-auto max-w-7xl px-5">
+            <MainNavigation collections={collections} />
+          </div>
+        </div>
+
+        {/* Mobile Search - Visible only on mobile below the top bar */}
+        <div className="block md:hidden bg-[#1350a2] px-3 pb-3">
+          <SearchField />
         </div>
 
         {/* Mobile Bottom Nav */}

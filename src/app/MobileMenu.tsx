@@ -12,7 +12,7 @@ import UserButton from "@/components/UserButton";
 import { twConfig } from "@/lib/utils";
 import { members } from "@wix/members";
 import { collections } from "@wix/stores";
-import { MenuIcon } from "lucide-react";
+import { LayoutGrid } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -48,31 +48,15 @@ export default function MobileMenu({
 
   return (
     <>
-      {/* ✅ Mobile top bar */}
-      <div className="bg-background lg:hidden">
-        {/* Top row → menu + logo */}
-        <div className="md:p-5">
-          {/* Logo */}
-          <Link
-            href="/"
-            className="flex flex-shrink-0 items-center justify-center gap-2"
-          >
-            <Image
-              src="/logonew.svg"
-              alt="Logo"
-              width={70}
-              height={70}
-              className="h-20 w-auto"
-            />
-            {/* <span className="text-xl font-bold dark:text-black">Yuricart</span> */}
-          </Link>
-
-          {/* Full width search input below logo */}
-          <div className="flex-1 px-3 pb-3">
-            <SearchField className="w-full" />
-          </div>
-        </div>
-      </div>
+      {/* Trigger Button */}
+      <Button
+        variant="ghost"
+        size="icon"
+        onClick={() => setIsOpen(true)}
+        className="text-white hover:bg-white/10"
+      >
+        <LayoutGrid className="size-6" />
+      </Button>
 
       {/* ✅ Mobile Drawer Menu */}
       <Sheet open={isOpen} onOpenChange={setIsOpen}>

@@ -280,12 +280,16 @@ export default function ShoppingCartButton({
   return (
     <>
       <div className="relative">
-        <Button variant="ghost" size="icon" onClick={openDrawer}>
-          <ShoppingCartIcon />
-          <span className="absolute right-0 top-0 flex size-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
-            {totalQuantity < 10 ? totalQuantity : "9+"}
+        <button className="relative flex items-center gap-2 hover:text-gray-200 transition-colors" onClick={openDrawer}>
+          <ShoppingCartIcon className="size-6" />
+          <span className="absolute -right-2 -top-1 flex size-4 items-center justify-center rounded-full bg-white text-[10px] text-[#1350a2] font-bold md:hidden">
+            {totalQuantity}
           </span>
-        </Button>
+          <div className="hidden md:flex flex-col items-start text-[13px] font-semibold leading-tight">
+            <span>Cart</span>
+            <span>Item {totalQuantity}</span>
+          </div>
+        </button>
       </div>
 
       {/* ✅ global drawer control */}

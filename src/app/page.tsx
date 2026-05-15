@@ -82,7 +82,7 @@
 //       return null;
 // }
 
-  
+
 //   return (
 //     <div className="space-y-5">
 //       <h2 className="text-2xl font-bold">Featured Products</h2>
@@ -190,7 +190,7 @@
 //       return null;
 // }
 
-  
+
 //   return (
 //     <div className="space-y-5">
 //       <h2 className="text-2xl font-bold">Featured Products</h2>
@@ -223,19 +223,188 @@ import { getWixServerClient } from "@/lib/wix-client.server";
 import { getCollectionBySlug } from "@/wix-api/collections";
 import { queryProducts } from "@/wix-api/products";
 import HeroSlider from "@/components/SliderHero";
+import PromotionGrid from "@/components/PromotionGrid";
+import ProductCarousel from "@/components/ProductCarousel";
+import MobileSection from "@/components/MobileSection";
+import dynamic from "next/dynamic";
+const FeaturedProductsSlider = dynamic(() => import("@/components/FeaturedProductsSlider"), { ssr: false });
+import ProductGridSlider from "@/components/ProductGridSlider";
+import LaptopSection from "@/components/LaptopSection";
+import AccessoriesSection from "@/components/AccessoriesSection";
 
 export default function Home() {
   return (
-    <main className="mx-auto max-w-7xl space-y-4 px-4 py-5 md:space-y-10 md:px-5 md:py-10">
-      {/* Hero Slider */}
-      <HeroSlider />
+    <main className="mx-auto max-w-7xl">
+      {/* Hero Slider - Minimal margin from header */}
+      <div className="mb-2 md:mb-4">
+        <HeroSlider />
+      </div>
 
-      {/* Featured Products */}
-      <Suspense fallback={<LoadingSkeleton />}>
-        <FeaturedProducts />
+      {/* Promotion Grid - Fetches first 3 featured products */}
+      <Suspense fallback={null}>
+        <PromotionGridSection />
       </Suspense>
+
+      {/* Product Carousel Section */}
+      <Suspense fallback={null}>
+        <ProductCarouselSection />
+      </Suspense>
+
+      {/* Mobile Section */}
+      <MobileSection />
+
+      {/* 5G Mobile Phones Section */}
+      <Suspense fallback={null}>
+        <MobileProductsSection />
+      </Suspense>
+
+      {/* Laptops Section */}
+      <LaptopSection />
+      <Suspense fallback={null}>
+        <LaptopProductsSection />
+      </Suspense>
+
+      {/* Accessories Section */}
+      <AccessoriesSection />
+      <Suspense fallback={null}>
+        <AccessoriesProductsSection />
+      </Suspense>
+
+      {/* Content Container */}
+      <div className="px-4 py-2 md:px-5 md:py-4 space-y-10">
+        {/* Featured Products */}
+        <Suspense fallback={<LoadingSkeleton />}>
+          <FeaturedProducts />
+        </Suspense>
+      </div>
     </main>
   );
+}
+
+function PromotionGridSection() {
+  return <PromotionGrid />;
+}
+
+async function ProductCarouselSection() {
+  const wixClient = getWixServerClient();
+  const collection = await getCollectionBySlug(wixClient, "featured-products");
+
+  if (!collection?._id) return null;
+
+  const featuredProducts = await queryProducts(wixClient, {
+    collectionIds: collection._id,
+  });
+
+  if (!featuredProducts.items.length) return null;
+
+  return <ProductCarousel products={featuredProducts.items} />;
+}
+
+async function MobileProductsSection() {
+  const wixClient = getWixServerClient();
+  const collection = await getCollectionBySlug(wixClient, "featured-products");
+
+  if (!collection?._id) return null;
+
+  const featuredProducts = await queryProducts(wixClient, {
+    collectionIds: collection._id,
+  });
+
+  // Filter for mobile products (Redmi, Xiaomi, Modio, etc.)
+  const mobileProducts = featuredProducts.items.filter(product => {
+    const name = product.name?.toLowerCase() || "";
+    const isMobileBrand = name.includes("redmi") ||
+      name.includes("xiaomi") ||
+      name.includes("modio") ||
+      name.includes("oppo") ||
+      name.includes("samsung");
+
+    // Exclude specific Modio models requested by the user
+    const isExcluded = name.includes("m36") ||
+      name.includes("m37") ||
+      name.includes("m38") ||
+      name.includes("m91");
+
+    return isMobileBrand && !isExcluded;
+  });
+
+  if (!mobileProducts.length) return null;
+
+  return <ProductGridSlider products={mobileProducts} title="5G Mobile Phones & Tablets" />;
+}
+
+async function LaptopProductsSection() {
+  const wixClient = getWixServerClient();
+  const collection = await getCollectionBySlug(wixClient, "featured-products");
+
+  if (!collection?._id) return null;
+
+  const featuredProducts = await queryProducts(wixClient, {
+    collectionIds: collection._id,
+  });
+
+  const laptopProducts = featuredProducts.items.filter(product => {
+    const name = product.name?.toLowerCase() || "";
+    const isLaptopBrand = name.includes("laptop") || 
+                         name.includes("hp") || 
+                         name.includes("dell") || 
+                         name.includes("macbook") ||
+                         name.includes("lenovo");
+    
+    // Exclude desktops and workstations
+    const isDesktop = name.includes("desktop") || 
+                      name.includes("workstation") || 
+                      name.includes("sff") || 
+                      name.includes("elite desk") || 
+                      name.includes("pro desk") || 
+                      name.includes("8200 elite") ||
+                      name.includes("t1700");
+
+    return isLaptopBrand && !isDesktop;
+  });
+
+  if (!laptopProducts.length) return null;
+
+  return <ProductGridSlider products={laptopProducts} title="Featured Laptops" />;
+}
+
+async function AccessoriesProductsSection() {
+  const wixClient = getWixServerClient();
+  const collection = await getCollectionBySlug(wixClient, "featured-products");
+
+  if (!collection?._id) return null;
+
+  const featuredProducts = await queryProducts(wixClient, {
+    collectionIds: collection._id,
+  });
+
+  const accessoryProducts = featuredProducts.items.filter(product => {
+    const name = product.name?.toLowerCase() || "";
+    const isAccessory = name.includes("accessory") || 
+                       name.includes("watch") || 
+                       name.includes("headphone") || 
+                       name.includes("buds") ||
+                       name.includes("charger") ||
+                       name.includes("cable") ||
+                       name.includes("mouse");
+    
+    // Include desktops, workstations, and gaming consoles here as requested
+    const isSpecialCategory = name.includes("desktop") || 
+                             name.includes("workstation") || 
+                             name.includes("sff") || 
+                             name.includes("elite desk") || 
+                             name.includes("pro desk") || 
+                             name.includes("8200 elite") ||
+                             name.includes("t1700") ||
+                             name.includes("playstation") ||
+                             name.includes("ps5");
+
+    return isAccessory || isSpecialCategory;
+  });
+
+  if (!accessoryProducts.length) return null;
+
+  return <ProductGridSlider products={accessoryProducts} title="Desktops & Accessories" />;
 }
 
 async function FeaturedProducts() {
@@ -248,18 +417,7 @@ async function FeaturedProducts() {
     collectionIds: collection._id,
   });
 
-  if (!featuredProducts.items.length) return null;
-
-  return (
-    <div className="space-y-5">
-      <h2 className="text-2xl font-bold">Featured Products</h2>
-      <div className="flex grid-cols-2 flex-col gap-5 sm:grid md:grid-cols-3 lg:grid-cols-4">
-        {featuredProducts.items.map((product: any) => (
-          <Product key={product._id} product={product} />
-        ))}
-      </div>
-    </div>
-  );
+  return <FeaturedProductsSlider products={featuredProducts.items} />;
 }
 
 function LoadingSkeleton() {
