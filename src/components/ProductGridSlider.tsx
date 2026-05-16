@@ -1,6 +1,5 @@
 "use client";
 
-import { products } from "@wix/api";
 import Image from "next/image";
 import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
