@@ -15,10 +15,12 @@ export const getCollections = cache(
   async (wixClient: WixClient): Promise<collections.Collection[]> => {
     const collections = await wixClient.collections
       .queryCollections()
-      .ne("_id", "00000000-000000-000000-000000000001") // all products
-      .ne("_id", "f23546da-f92f-2b11-a1be-154979378f44") // featured products
       .find();
 
-    return collections.items;
+    return collections.items.filter(
+      (collection) =>
+        collection._id !== "00000000-000000-000000-000000000001" && // all products
+        collection._id !== "f23546da-f92f-2b11-a1be-154979378f44" // featured products
+    );
   },
 );
