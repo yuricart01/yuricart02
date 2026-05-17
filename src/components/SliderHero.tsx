@@ -20,8 +20,8 @@ const Slider = () => {
         <Swiper
           style={
             {
-              "--swiper-navigation-color": "#fff",
-              "--swiper-navigation-size": "20px",
+              "--swiper-navigation-color": "#1f2937",
+              "--swiper-navigation-size": "18px",
               "--swiper-pagination-color": "#fff",
             } as React.CSSProperties
           }
@@ -35,7 +35,7 @@ const Slider = () => {
             disableOnInteraction: false,
           }}
           modules={[Pagination, Navigation, Autoplay]}
-          className="mySwiper h-full w-full [&_.swiper-button-next]:bg-black/40 [&_.swiper-button-prev]:bg-black/40 [&_.swiper-button-next]:w-8 [&_.swiper-button-prev]:w-8 [&_.swiper-button-next]:h-12 [&_.swiper-button-prev]:h-12 [&_.swiper-button-next]:after:text-[15px] [&_.swiper-button-prev]:after:text-[15px] [&_.swiper-button-next]:opacity-0 [&_.swiper-button-prev]:opacity-0 group-hover:[&_.swiper-button-next]:opacity-100 group-hover:[&_.swiper-button-prev]:opacity-100 [&_.swiper-button-next]:transition-opacity [&_.swiper-button-prev]:transition-opacity [&_.swiper-button-next]:right-0 [&_.swiper-button-prev]:left-0 [&_.swiper-button-next]:rounded-l-md [&_.swiper-button-prev]:rounded-r-md"
+          className="mySwiper h-full w-full [&_.swiper-button-next]:bg-white/95 [&_.swiper-button-prev]:bg-white/95 [&_.swiper-button-next]:backdrop-blur-sm [&_.swiper-button-prev]:backdrop-blur-sm [&_.swiper-button-next]:w-10 [&_.swiper-button-prev]:w-10 [&_.swiper-button-next]:h-10 [&_.swiper-button-prev]:h-10 [&_.swiper-button-next]:after:text-[18px] [&_.swiper-button-prev]:after:text-[18px] [&_.swiper-button-next]:after:font-bold [&_.swiper-button-prev]:after:font-bold [&_.swiper-button-next]:opacity-100 [&_.swiper-button-prev]:opacity-100 md:[&_.swiper-button-next]:opacity-0 md:[&_.swiper-button-prev]:opacity-0 group-hover:[&_.swiper-button-next]:opacity-100 group-hover:[&_.swiper-button-prev]:opacity-100 [&_.swiper-button-next]:transition-all [&_.swiper-button-prev]:transition-all [&_.swiper-button-next]:duration-300 [&_.swiper-button-prev]:duration-300 [&_.swiper-button-next]:right-4 [&_.swiper-button-prev]:left-4 [&_.swiper-button-next]:rounded-full [&_.swiper-button-prev]:rounded-full hover:[&_.swiper-button-next]:bg-white hover:[&_.swiper-button-prev]:bg-white hover:[&_.swiper-button-next]:scale-110 hover:[&_.swiper-button-prev]:scale-110 [&_.swiper-button-next]:shadow-md [&_.swiper-button-prev]:shadow-md"
         >
           <SwiperSlide className="relative w-full h-full cursor-grab active:cursor-grabbing">
             <Image

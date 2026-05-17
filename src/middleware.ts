@@ -11,18 +11,36 @@ export async function middleware(request: NextRequest) {
   const cookies = request.cookies;
   const sessionCookie = cookies.get(WIX_SESSION_COOKIE);
 
-  let sessionTokens = sessionCookie
-    ? (JSON.parse(sessionCookie.value) as Tokens)
-    : await wixClient.auth.generateVisitorTokens();
-
-  if (sessionTokens.accessToken.expiresAt < Math.floor(Date.now() / 1000)) {
-    try {
-      sessionTokens = await wixClient.auth.renewToken(
-        sessionTokens.refreshToken,
-      );
-    } catch (error) {
-      sessionTokens = await wixClient.auth.generateVisitorTokens();
+  let sessionTokens: Tokens | undefined;
+  
+  if (sessionCookie) {
+    sessionTokens = JSON.parse(sessionCookie.value) as Tokens;
+    
+    if (sessionTokens.accessToken.expiresAt < Math.floor(Date.now() / 1000)) {
+      try {
+        sessionTokens = await wixClient.auth.renewToken(
+          sessionTokens.refreshToken,
+        );
+      } catch (error) {
+        try {
+          sessionTokens = await wixClient.auth.generateVisitorTokens();
+        } catch (innerError) {
+          sessionTokens = undefined;
+        }
+      }
     }
+  } else {
+    try {
+      sessionTokens = await wixClient.auth.generateVisitorTokens();
+    } catch (error) {
+      sessionTokens = undefined;
+    }
+  }
+
+  if (!sessionTokens) {
+    // If we fail to get tokens (e.g. network fetch failed), let the request through
+    // but don't try to set a new session cookie.
+    return NextResponse.next({ request });
   }
 
   request.cookies.set(WIX_SESSION_COOKIE, JSON.stringify(sessionTokens));

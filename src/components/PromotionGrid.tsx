@@ -29,25 +29,31 @@ interface PromotionGridProps {
 export default function PromotionGrid({ products }: PromotionGridProps) {
   return (
     <div className="px-3 md:px-5 mb-4">
-      <div className="bg-white overflow-hidden">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-          {PROMOTION_BANNERS.map((banner) => (
-            <Link
-              key={banner.id}
-              href={banner.href}
-              className="flex flex-col relative overflow-hidden rounded-xl hover:shadow-md transition-shadow group"
-            >
-              <div className="relative overflow-hidden bg-gray-100 h-[200px] rounded-xl">
-                <Image
-                  src={banner.image}
-                  alt={banner.alt}
-                  width={600}
-                  height={300}
-                  className="hover:scale-[1.05] transition-all duration-500 w-full h-full object-cover p-0"
-                />
-              </div>
-            </Link>
-          ))}
+      <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100">
+        <div className="p-2">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+            {PROMOTION_BANNERS.map((banner, index) => (
+              <Link
+                key={banner.id}
+                href={banner.href}
+                className={`flex flex-col relative rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 group ${
+                  index === 0 ? "col-span-2 md:col-span-1" : "col-span-1"
+                }`}
+              >
+                <div className={`relative w-full ${
+                  index === 0 ? "h-[180px] md:h-[220px]" : "h-[160px] md:h-[220px]"
+                }`}>
+                  <Image
+                    src={banner.image}
+                    alt={banner.alt}
+                    width={index === 0 ? 800 : 400}
+                    height={index === 0 ? 400 : 400}
+                    className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                  />
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </div>

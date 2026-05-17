@@ -28,17 +28,22 @@ export default function ProductGridSlider({ products, title, hideTitle = false }
           <Swiper
             modules={[Navigation, Autoplay]}
             spaceBetween={8}
-            slidesPerView={2}
+            slidesPerView={2.2}
             navigation={{
               prevEl: ".swiper-button-prev-custom-grid",
               nextEl: ".swiper-button-next-custom-grid",
             }}
-            breakpoints={{
-              640: { slidesPerView: 3 },
-              768: { slidesPerView: 4 },
-              1024: { slidesPerView: 6 },
+            autoplay={{
+              delay: 3500,
+              disableOnInteraction: false,
             }}
-            className="mySwiper"
+            breakpoints={{
+              640: { slidesPerView: 3.2 },
+              768: { slidesPerView: 4.2 },
+              1024: { slidesPerView: 5.5 },
+              1280: { slidesPerView: 6 },
+            }}
+            className="mySwiper !pb-2"
           >
             {products.map((product) => {
               const mainImage = product.media?.items?.[0]?.image?.url || "/placeholder.png";
@@ -94,11 +99,11 @@ export default function ProductGridSlider({ products, title, hideTitle = false }
           </Swiper>
 
           {/* Custom Navigation Buttons */}
-          <button className="swiper-button-prev-custom-grid absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/60 text-white w-8 h-12 flex items-center justify-center rounded-r opacity-0 group-hover:opacity-100 transition-opacity">
-            <ChevronLeft size={24} />
+          <button className="swiper-button-prev-custom-grid absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/95 backdrop-blur-sm shadow-md border border-gray-100 hover:bg-white hover:scale-105 text-gray-800 w-10 h-10 flex items-center justify-center rounded-full opacity-100 md:opacity-0 group-hover:opacity-100 transition-all duration-300 disabled:opacity-0 disabled:scale-100 disabled:cursor-not-allowed">
+            <ChevronLeft size={24} className="mr-0.5" />
           </button>
-          <button className="swiper-button-next-custom-grid absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-black/40 hover:bg-black/60 text-white w-8 h-12 flex items-center justify-center rounded-l opacity-0 group-hover:opacity-100 transition-opacity">
-            <ChevronRight size={24} />
+          <button className="swiper-button-next-custom-grid absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/95 backdrop-blur-sm shadow-md border border-gray-100 hover:bg-white hover:scale-105 text-gray-800 w-10 h-10 flex items-center justify-center rounded-full opacity-100 md:opacity-0 group-hover:opacity-100 transition-all duration-300 disabled:opacity-0 disabled:scale-100 disabled:cursor-not-allowed">
+            <ChevronRight size={24} className="ml-0.5" />
           </button>
         </div>
       </div>

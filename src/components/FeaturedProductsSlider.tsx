@@ -44,18 +44,18 @@ export default function FeaturedProductsSlider({ products }: FeaturedProductsSli
   return (
     <div className="space-y-6">
       {/* Tabs Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-gray-100 pb-4">
-        <h2 className="text-2xl font-bold text-black mb-4 md:mb-0">Featured Products</h2>
+      <div className="flex flex-col xl:flex-row xl:items-center justify-between border-b border-gray-100 pb-5">
+        <h2 className="text-2xl font-bold text-black mb-4 xl:mb-0 px-1">Featured Products</h2>
         
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-2 md:pb-0">
+        <div className="flex flex-wrap items-center gap-2 w-full xl:w-auto">
           {TABS.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 whitespace-nowrap ${
+              className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 border ${
                 activeTab === tab.id
-                  ? "bg-blue-600 text-white shadow-md shadow-blue-200 scale-105"
-                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  ? "bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-600/20 md:scale-105"
+                  : "bg-white text-gray-600 border-gray-200 hover:border-blue-400 hover:text-blue-600 hover:bg-blue-50"
               }`}
             >
               {tab.label}
