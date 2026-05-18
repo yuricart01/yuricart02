@@ -13,6 +13,7 @@ const TABS = [
   { id: "tablet", label: "Tablets" },
   { id: "desktop", label: "Desktops" },
   { id: "mobile", label: "Mobiles" },
+  { id: "accessories", label: "Accessories" },
 ];
 
 export default function FeaturedProductsSlider({ products }: FeaturedProductsSliderProps) {
@@ -35,6 +36,8 @@ export default function FeaturedProductsSlider({ products }: FeaturedProductsSli
           return content.includes("desktop") || content.includes("workstation") || content.includes("sff") || content.includes("all-in-one");
         case "mobile":
           return content.includes("mobile") || content.includes("iphone") || content.includes("redmi") || content.includes("smartphone");
+        case "accessories":
+          return content.includes("accessory") || content.includes("watch") || content.includes("headphone") || content.includes("buds") || content.includes("charger") || content.includes("cable") || content.includes("mouse") || content.includes("keyboard") || content.includes("speaker");
         default:
           return true;
       }
@@ -44,8 +47,8 @@ export default function FeaturedProductsSlider({ products }: FeaturedProductsSli
   return (
     <div className="space-y-6">
       {/* Tabs Header */}
-      <div className="flex flex-col xl:flex-row xl:items-center justify-between border-b border-gray-100 pb-5">
-        <h2 className="text-2xl font-bold text-black mb-4 xl:mb-0 px-1">Featured Products</h2>
+      <div className="flex flex-col xl:flex-row xl:items-center justify-between border-b border-gray-100 dark:border-gray-800 pb-5">
+        <h2 className="text-2xl font-bold text-black dark:text-white mb-4 xl:mb-0 px-1">Featured Products</h2>
         
         <div className="flex flex-wrap items-center gap-2 w-full xl:w-auto">
           {TABS.map((tab) => (
@@ -55,7 +58,7 @@ export default function FeaturedProductsSlider({ products }: FeaturedProductsSli
               className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 border ${
                 activeTab === tab.id
                   ? "bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-600/20 md:scale-105"
-                  : "bg-white text-gray-600 border-gray-200 hover:border-blue-400 hover:text-blue-600 hover:bg-blue-50"
+                  : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30"
               }`}
             >
               {tab.label}
@@ -68,7 +71,7 @@ export default function FeaturedProductsSlider({ products }: FeaturedProductsSli
       {filteredProducts.length > 0 ? (
         <ProductGridSlider products={filteredProducts} title="" hideTitle />
       ) : (
-        <div className="py-20 text-center bg-gray-50 rounded-xl border border-dashed border-gray-200">
+        <div className="py-20 text-center bg-gray-50 dark:bg-gray-800 rounded-xl border border-dashed border-gray-200 dark:border-gray-700">
           <p className="text-gray-400">No products found in this category.</p>
         </div>
       )}

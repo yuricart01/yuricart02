@@ -72,7 +72,7 @@ export default function NavbarClient({
         </div>
 
         {/* Bottom Row - White Background (Desktop Only) */}
-        <div className="hidden md:block bg-white border-b">
+        <div className="hidden md:block bg-white dark:bg-gray-900 border-b dark:border-gray-800">
           <div className="mx-auto max-w-7xl px-5">
             <MainNavigation collections={collections} />
           </div>

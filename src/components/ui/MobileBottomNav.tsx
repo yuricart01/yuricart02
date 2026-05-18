@@ -44,13 +44,13 @@ export default function MobileBottomNav({
       0,
     ) ?? 0;
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-gray-200 bg-white shadow-inner lg:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-inner lg:hidden">
       <ul className="flex items-center justify-around py-2">
         {/* Home */}
         <li>
           <Link
             href="/"
-            className="flex flex-col items-center text-xs text-gray-600"
+            className="flex flex-col items-center text-xs text-gray-600 dark:text-gray-300"
           >
             <Home className="h-5 w-5" />
             <span>Home</span>
@@ -61,7 +61,7 @@ export default function MobileBottomNav({
         <li>
           <Link
             href="/shop"
-            className="flex flex-col items-center text-xs text-gray-600"
+            className="flex flex-col items-center text-xs text-gray-600 dark:text-gray-300"
           >
             <ShoppingBag className="h-5 w-5" />
             <span>Shop</span>
@@ -72,7 +72,7 @@ export default function MobileBottomNav({
         <li>
           <button
             onClick={openDrawer}
-            className="relative flex flex-col items-center text-xs text-gray-600"
+            className="relative flex flex-col items-center text-xs text-gray-600 dark:text-gray-300"
           >
             <ShoppingCart className="h-5 w-5" />
             <span className="absolute -right-2 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
@@ -86,7 +86,7 @@ export default function MobileBottomNav({
         <li>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="flex flex-col items-center text-xs text-gray-600">
+              <button className="flex flex-col items-center text-xs text-gray-600 dark:text-gray-300">
                 <User className="h-5 w-5" />
                 <span>Account</span>
               </button>

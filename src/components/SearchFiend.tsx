@@ -77,9 +77,9 @@ export default function SearchField({ className }: SearchFieldProps) {
         <Input 
           name="q" 
           placeholder="Search products..." 
-          className="pe-10 rounded-full bg-white text-black h-11 border-none focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-blue-400" 
+          className="pe-10 rounded-full bg-white dark:bg-gray-800 text-black dark:text-white h-11 border-none focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-blue-400" 
         />
-        <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 transform text-[#1350a2] hover:text-blue-800 transition-colors">
+        <button type="submit" className="absolute right-3 top-1/2 -translate-y-1/2 transform text-[#1350a2] dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors">
           <SearchIcon className="size-5" />
         </button>
       </div>

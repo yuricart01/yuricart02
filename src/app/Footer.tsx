@@ -34,7 +34,7 @@ export default function Footer() {
               {/* Facebook */}
               <li>
                 <a
-                  href="https://www.facebook.com/yuricarts/"
+                  href="https://www.facebook.com/yuricarts"
                   title="Facebook"
                   className="flex size-7 items-center justify-center rounded-full bg-foreground text-background transition-all duration-200 hover:bg-primary focus:bg-primary"
                   target="_blank"

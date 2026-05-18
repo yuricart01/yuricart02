@@ -38,8 +38,8 @@ export default function MobileSection() {
 
   return (
     <div className="px-3 md:px-5 mb-4">
-      <div className="bg-white rounded-xl overflow-hidden shadow-sm border">
-        <div className="text-xl p-4 w-full font-bold text-black border-b">
+      <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm border dark:border-gray-700">
+        <div className="text-xl p-4 w-full font-bold text-black dark:text-white border-b dark:border-gray-700">
           <h1>Mobiles & Accessories</h1>
         </div>
 

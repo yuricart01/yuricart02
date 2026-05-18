@@ -17,9 +17,9 @@ interface ProductGridSliderProps {
 export default function ProductGridSlider({ products, title, hideTitle = false }: ProductGridSliderProps) {
   return (
     <div className="px-3 md:px-5 mb-8">
-      <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100">
+      <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700">
         {!hideTitle && (
-          <div className="text-xl p-4 w-full font-bold text-black border-b flex items-center justify-between">
+          <div className="text-xl p-4 w-full font-bold text-black dark:text-white border-b dark:border-gray-700 flex items-center justify-between">
             <h1>{title}</h1>
           </div>
         )}
@@ -51,11 +51,11 @@ export default function ProductGridSlider({ products, title, hideTitle = false }
               
               return (
                 <SwiperSlide key={product._id}>
-                  <div className="group relative border rounded-lg bg-white overflow-hidden hover:shadow-md transition-shadow duration-300">
+                  <div className="group relative border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 overflow-hidden hover:shadow-md transition-shadow duration-300">
                     <Link href={`/products/${product.slug}`} className="block">
                       <div className="flex flex-col items-center md:items-start w-full">
                         {/* Image Container */}
-                        <div className="w-full relative h-48 md:h-60 p-4 flex items-center justify-center bg-gray-50/30">
+                        <div className="w-full relative h-48 md:h-60 p-4 flex items-center justify-center bg-gray-50/30 dark:bg-gray-700/30">
                           <Image
                             src={mainImage}
                             alt={product.name || "Product"}
@@ -70,7 +70,7 @@ export default function ProductGridSlider({ products, title, hideTitle = false }
                                 Sale
                               </span>
                             )}
-                            <span className="w-fit px-2 py-1 text-xs bg-white/90 backdrop-blur-sm font-bold text-gray-900 border border-gray-200 rounded-sm shadow-sm">
+                            <span className="w-fit px-2 py-1 text-xs bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm font-bold text-gray-900 dark:text-white border border-gray-200 dark:border-gray-600 rounded-sm shadow-sm">
                               {price.replace(/Kes/gi, "").replace(/Ksh/gi, "Ksh ").trim()}
                             </span>
                           </div>
@@ -78,14 +78,14 @@ export default function ProductGridSlider({ products, title, hideTitle = false }
                         
                         {/* Text Detail */}
                         <div className="w-full p-4 flex flex-col items-start space-y-2">
-                          <h3 className="text-md font-bold leading-tight line-clamp-2 h-12 text-black group-hover:text-blue-700 transition-colors">
+                          <h3 className="text-md font-bold leading-tight line-clamp-2 h-12 text-black dark:text-white group-hover:text-blue-700 dark:group-hover:text-blue-400 transition-colors">
                             {product.name?.replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, "").trim()}
                           </h3>
-                          <div className="text-xs text-black/80 line-clamp-2 h-8 leading-relaxed">
+                          <div className="text-xs text-black/80 dark:text-gray-300 line-clamp-2 h-8 leading-relaxed">
                             {product.description?.replace(/<[^>]*>?/gm, '').trim() || "Premium quality product with reliable performance and sleek design."}
                           </div>
                           <div className="pt-2">
-                            <strong className="text-black font-extrabold text-xl">
+                            <strong className="text-black dark:text-white font-extrabold text-xl">
                               {price.replace(/Kes/gi, "").replace(/Ksh/gi, "Ksh ").trim()}
                             </strong>
                           </div>
@@ -99,10 +99,10 @@ export default function ProductGridSlider({ products, title, hideTitle = false }
           </Swiper>
 
           {/* Custom Navigation Buttons */}
-          <button className="swiper-button-prev-custom-grid absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/95 backdrop-blur-sm shadow-md border border-gray-100 hover:bg-white hover:scale-105 text-gray-800 w-10 h-10 flex items-center justify-center rounded-full opacity-100 md:opacity-0 group-hover:opacity-100 transition-all duration-300 disabled:opacity-0 disabled:scale-100 disabled:cursor-not-allowed">
+          <button className="swiper-button-prev-custom-grid absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm shadow-md border border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 hover:scale-105 text-gray-800 dark:text-white w-10 h-10 flex items-center justify-center rounded-full opacity-100 md:opacity-0 group-hover:opacity-100 transition-all duration-300 disabled:opacity-0 disabled:scale-100 disabled:cursor-not-allowed">
             <ChevronLeft size={24} className="mr-0.5" />
           </button>
-          <button className="swiper-button-next-custom-grid absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/95 backdrop-blur-sm shadow-md border border-gray-100 hover:bg-white hover:scale-105 text-gray-800 w-10 h-10 flex items-center justify-center rounded-full opacity-100 md:opacity-0 group-hover:opacity-100 transition-all duration-300 disabled:opacity-0 disabled:scale-100 disabled:cursor-not-allowed">
+          <button className="swiper-button-next-custom-grid absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm shadow-md border border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 hover:scale-105 text-gray-800 dark:text-white w-10 h-10 flex items-center justify-center rounded-full opacity-100 md:opacity-0 group-hover:opacity-100 transition-all duration-300 disabled:opacity-0 disabled:scale-100 disabled:cursor-not-allowed">
             <ChevronRight size={24} className="ml-0.5" />
           </button>
         </div>

@@ -12,8 +12,8 @@ export default function LaptopSection() {
 
   return (
     <div className="px-3 md:px-5 mb-4">
-      <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100">
-        <div className="text-xl p-4 w-full font-bold text-black border-b">
+      <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700">
+        <div className="text-xl p-4 w-full font-bold text-black dark:text-white border-b dark:border-gray-700">
           <h1>Laptops & Computing</h1>
         </div>
         

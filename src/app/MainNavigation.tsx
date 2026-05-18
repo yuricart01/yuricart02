@@ -21,8 +21,8 @@ export default function MainNavigation({
       <Link
         href="/shop"
         className={cn(
-          "text-sm font-bold uppercase tracking-wider hover:text-[#1350a2] transition-colors",
-          pathname === "/shop" ? "text-[#1350a2]" : "text-gray-700"
+          "text-sm font-bold uppercase tracking-wider hover:text-[#1350a2] dark:hover:text-blue-400 transition-colors",
+          pathname === "/shop" ? "text-[#1350a2] dark:text-blue-400" : "text-gray-700 dark:text-white"
         )}
       >
         Shop All
@@ -36,8 +36,8 @@ export default function MainNavigation({
             key={collection._id}
             href={href}
             className={cn(
-              "text-sm font-bold uppercase tracking-wider hover:text-[#1350a2] transition-colors",
-              isActive ? "text-[#1350a2]" : "text-gray-700"
+              "text-sm font-bold uppercase tracking-wider hover:text-[#1350a2] dark:hover:text-blue-400 transition-colors",
+              isActive ? "text-[#1350a2] dark:text-blue-400" : "text-gray-700 dark:text-white"
             )}
           >
             {collection.name}

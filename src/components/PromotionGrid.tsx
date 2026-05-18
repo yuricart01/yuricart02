@@ -29,7 +29,7 @@ interface PromotionGridProps {
 export default function PromotionGrid({ products }: PromotionGridProps) {
   return (
     <div className="px-3 md:px-5 mb-4">
-      <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100">
+      <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700">
         <div className="p-2">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
             {PROMOTION_BANNERS.map((banner, index) => (
