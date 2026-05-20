@@ -220,7 +220,7 @@ import Product from "@/components/Products";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Suspense } from "react";
 import { getWixServerClient } from "@/lib/wix-client.server";
-import { getCollectionBySlug } from "@/wix-api/collections";
+import { getCollectionBySlug, getCollections } from "@/wix-api/collections";
 import { queryProducts } from "@/wix-api/products";
 import HeroSlider from "@/components/SliderHero";
 import PromotionGrid from "@/components/PromotionGrid";
@@ -232,7 +232,12 @@ import ProductGridSlider from "@/components/ProductGridSlider";
 import LaptopSection from "@/components/LaptopSection";
 import AccessoriesSection from "@/components/AccessoriesSection";
 
-export default function Home() {
+export default async function Home() {
+  // Debug: Log all available collections
+  const wixClient = getWixServerClient();
+  const allCollections = await getCollections(wixClient);
+  console.log("DEBUG: ALL AVAILABLE COLLECTIONS:", allCollections.map(c => ({ name: c.name, slug: c.slug, id: c._id })));
+
   return (
     <main className="mx-auto max-w-7xl">
       {/* Hero Slider - Minimal margin from header */}

@@ -1,47 +1,132 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 import ProductGridSlider from "./ProductGridSlider";
+import { wixBrowserClient } from "@/lib/wix-client.browser";
+import { queryProducts } from "@/wix-api/products";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface FeaturedProductsSliderProps {
   products: any[];
 }
 
 const TABS = [
-  { id: "all", label: "All Products" },
-  { id: "laptop", label: "Laptops" },
-  { id: "tablet", label: "Tablets" },
-  { id: "desktop", label: "Desktops" },
-  { id: "mobile", label: "Mobiles" },
-  { id: "accessories", label: "Accessories" },
+  { id: "all", label: "All Products", slug: null },
+  { id: "laptop", label: "Laptops", slug: "laptops" },
+  { id: "tablet", label: "Tablets", slug: "tablets" },
+  { id: "desktop", label: "Desktops", slug: "desktops" },
+  { id: "mobile", label: "Mobiles", slug: "phones" },
+  { id: "accessories", label: "Accessories", slug: "accessories" },
 ];
+
+// TODO: Update these slugs to match your actual Wix collection slugs
+// You can find your collection slugs in your Wix store dashboard or by visiting /collections/[slug] pages
+// Common formats: "laptops", "laptops-collection", "laptops-page", etc.
 
 export default function FeaturedProductsSlider({ products }: FeaturedProductsSliderProps) {
   const [activeTab, setActiveTab] = useState("all");
+  const [filteredProducts, setFilteredProducts] = useState<any[]>(products);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const filteredProducts = useMemo(() => {
-    if (activeTab === "all") return products;
+  useEffect(() => {
+    const fetchProductsByCollection = async () => {
+      const activeTabConfig = TABS.find(tab => tab.id === activeTab);
 
-    return products.filter((product: any) => {
-      const name = product.name?.toLowerCase() || "";
-      const desc = product.description?.toLowerCase() || "";
-      const content = name + " " + desc;
+      if (!activeTabConfig) return;
 
-      switch (activeTab) {
-        case "laptop":
-          return content.includes("laptop") || content.includes("notebook") || content.includes("macbook");
-        case "tablet":
-          return content.includes("tablet") || content.includes("ipad") || content.includes("modio m");
-        case "desktop":
-          return content.includes("desktop") || content.includes("workstation") || content.includes("sff") || content.includes("all-in-one");
-        case "mobile":
-          return content.includes("mobile") || content.includes("iphone") || content.includes("redmi") || content.includes("smartphone");
-        case "accessories":
-          return content.includes("accessory") || content.includes("watch") || content.includes("headphone") || content.includes("buds") || content.includes("charger") || content.includes("cable") || content.includes("mouse") || content.includes("keyboard") || content.includes("speaker");
-        default:
-          return true;
+      // If "All Products" tab, show all products
+      if (activeTab === "all") {
+        setFilteredProducts(products);
+        return;
       }
-    });
+
+      // Fetch products from the respective collection
+      setIsLoading(true);
+      try {
+        const { collection } = await wixBrowserClient.collections.getCollectionBySlug(activeTabConfig.slug!);
+
+        if (collection?._id) {
+          const collectionProducts = await queryProducts(wixBrowserClient, {
+            collectionIds: collection._id,
+            limit: 20,
+          });
+          setFilteredProducts(collectionProducts.items);
+        } else {
+          // If collection not found, filter the main products array by name as fallback
+          const filtered = products.filter(product => {
+            const name = product.name?.toLowerCase() || "";
+            if (activeTab === "laptop") {
+              const isLaptopBrand = name.includes("laptop") || 
+                                   name.includes("hp") || 
+                                   name.includes("dell") || 
+                                   name.includes("macbook") ||
+                                   name.includes("lenovo");
+              const isDesktop = name.includes("desktop") || 
+                                name.includes("workstation") || 
+                                name.includes("sff") || 
+                                name.includes("elite desk") || 
+                                name.includes("pro desk") || 
+                                name.includes("8200 elite") ||
+                                name.includes("t1700");
+              return isLaptopBrand && !isDesktop;
+            }
+            if (activeTab === "mobile") {
+              const isMobileBrand = name.includes("redmi") ||
+                                    name.includes("xiaomi") ||
+                                    name.includes("modio") ||
+                                    name.includes("oppo") ||
+                                    name.includes("samsung");
+              const isExcluded = name.includes("m36") ||
+                                 name.includes("m37") ||
+                                 name.includes("m38") ||
+                                 name.includes("m91");
+              return isMobileBrand && !isExcluded;
+            }
+            return true;
+          });
+          setFilteredProducts(filtered);
+        }
+      } catch (error) {
+        console.error(`Error fetching products for ${activeTabConfig.slug}:`, error);
+        // If collection not found, filter the main products array by name as fallback
+        const filtered = products.filter(product => {
+          const name = product.name?.toLowerCase() || "";
+          if (activeTab === "laptop") {
+            const isLaptopBrand = name.includes("laptop") || 
+                                 name.includes("hp") || 
+                                 name.includes("dell") || 
+                                 name.includes("macbook") ||
+                                 name.includes("lenovo");
+            const isDesktop = name.includes("desktop") || 
+                              name.includes("workstation") || 
+                              name.includes("sff") || 
+                              name.includes("elite desk") || 
+                              name.includes("pro desk") || 
+                              name.includes("8200 elite") ||
+                              name.includes("t1700");
+            return isLaptopBrand && !isDesktop;
+          }
+          if (activeTab === "mobile") {
+            const isMobileBrand = name.includes("redmi") ||
+                                  name.includes("xiaomi") ||
+                                  name.includes("modio") ||
+                                  name.includes("oppo") ||
+                                  name.includes("samsung");
+            const isExcluded = name.includes("m36") ||
+                               name.includes("m37") ||
+                               name.includes("m38") ||
+                               name.includes("m91");
+            return isMobileBrand && !isExcluded;
+          }
+          return true;
+        });
+        setFilteredProducts(filtered);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProductsByCollection();
   }, [activeTab, products]);
 
   return (
@@ -68,7 +153,13 @@ export default function FeaturedProductsSlider({ products }: FeaturedProductsSli
       </div>
 
       {/* Slider */}
-      {filteredProducts.length > 0 ? (
+      {isLoading ? (
+        <div className="flex grid-cols-2 flex-col gap-5 sm:grid md:grid-cols-3 lg:grid-cols-4">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <Skeleton key={i} className="h-[26rem] w-full" />
+          ))}
+        </div>
+      ) : filteredProducts.length > 0 ? (
         <ProductGridSlider products={filteredProducts} title="" hideTitle />
       ) : (
         <div className="py-20 text-center bg-gray-50 dark:bg-gray-800 rounded-xl border border-dashed border-gray-200 dark:border-gray-700">
